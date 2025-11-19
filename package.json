@@ -1,12 +1,12 @@
 {
   "name": "dictionary-app",
   "version": "1.0.0",
-  "description": "Building a Dictionary Lookup App with Express.js and the Free Dictionary API",
+  "description": "Phone case selling app",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js"
   },
-  "author": "William",
+  "author": "William,Wayne,Andrew",
   "license": "MIT",
   "dependencies": {
     "express": "^4.21.1"
