@@ -1,8 +1,16 @@
 const express = require('express');
 const db = require('./database/db');
 const app = express();
+const authRoute = require('./routes/auth');
+const productsRoute = require('./routes/products');
+const usersRoute = require('./routes/users');
+const cartRoute = require('./routes/cart');
 
 app.use(express.json());
+app.use('/auth', authRoute);
+app.use('/products', productsRoute);
+app.use('/users', usersRoute);
+app.use('/cart', cartRoute);
 
 db.run(`CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
