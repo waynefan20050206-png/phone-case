@@ -1,47 +1,73 @@
 const express = require('express');
-const db = require('./database/db');
+const path = require('path');
+const session = require('express-session');
+
+const authRoutes = require('./routes/auth');
+const profileRoutes = require('./routes/profile');
+
 const app = express();
-const authRoute = require('./routes/auth');
-const productsRoute = require('./routes/products');
-const usersRoute = require('./routes/users');
-const cartRoute = require('./routes/cart');
+const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
-app.use('/auth', authRoute);
-app.use('/products', productsRoute);
-app.use('/users', usersRoute);
-app.use('/cart', cartRoute);
+// View engine
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
 
-db.run(`CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT,
-    password TEXT
-)`);
+// Static files
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.post('/register', (req, res) => {
-    const { username, password } = req.body;
+// Body parsing
+app.use(express.urlencoded({ extended: false }));
 
-    db.run(
-        `INSERT INTO users (username, password) VALUES (?, ?)`,
-        [username, password],
-        function(err) {
-            if (err) return res.status(500).send(err.message);
-            res.send({ message: "User registered!", user_id: this.lastID });
-        }
-    );
+// Session
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'dev-secret-change-me',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 // 1 hour
+    }
+  })
+);
+
+// Expose session user + messages to all views
+app.use((req, res, next) => {
+  if (req.session.userId) {
+    res.locals.currentUser = {
+      id: req.session.userId,
+      username: req.session.username,
+      email: req.session.email
+    };
+  } else {
+    res.locals.currentUser = null;
+  }
+
+  res.locals.success = req.session.success || null;
+  res.locals.error = req.session.error || null;
+
+  delete req.session.success;
+  delete req.session.error;
+
+  next();
 });
 
-app.get('/users', (req, res) => {
-    db.all(`SELECT * FROM users`, [], (err, rows) => {
-        if (err) return res.status(500).send(err.message);
-        res.send(rows);
-    });
+// Routes
+app.use('/', authRoutes);
+app.use('/', profileRoutes);
+
+// Root
+app.get('/', (req, res) => {
+  if (req.session.userId) return res.redirect('/dashboard');
+  res.redirect('/login');
 });
 
-app.get('/db-test', (req, res) => {
-  db.all("SELECT name FROM sqlite_master WHERE type='table';", (err, rows) => {
-    res.json(rows);
-  });
+// Error handler
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).send('Something went wrong.');
 });
 
-app.listen(3000, () => console.log("Server running")); 
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
