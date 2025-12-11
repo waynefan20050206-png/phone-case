@@ -1,40 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Group 13 - Custom Phone Case Shop</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CaseCraft - Sales</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <h1>Custom Phone Case Store</h1>
-        <p>Create your own unique phone case!</p>
-    </header>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="flex items-center justify-between h-16">
+                <!-- Mobile Menu Button -->
+                <button class="lg:hidden p-2" data-mobile-menu>
+                    <i class="fas fa-bars text-gray-700"></i>
+                </button>
 
-    <main>
-        <section class="card">
-            <h2>Login</h2>
-            <form>
-                <input type="text" placeholder="Username" required />
-                <input type="password" placeholder="Password" required />
-                <button type="submit">Login</button>
-            </form>
-        </section>
+                <!-- Logo -->
+                <a href="index.html" class="text-2xl font-bold">
+                    <span class="text-gray-900">Case</span>
+                    <span class="text-orange-500">Craft</span>
+                </a>
 
-        <section class="card">
-            <h2>Register</h2>
-            <form>
-                <input type="text" placeholder="Username" required />
-                <input type="email" placeholder="Email" required />
-                <input type="password" placeholder="Password" required />
-                <button type="submit">Sign Up</button>
-            </form>
-        </section>
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center gap-6">
+                    <a href="personalize.html" class="text-gray-600 hover:text-gray-900">Personalize</a>
+                    <a href="#products" class="text-gray-600 hover:text-gray-900">Products</a>
+                    <a href="profile.html" class="text-gray-600 hover:text-gray-900">Account</a>
+                </div>
+
+                <!-- Right Icons -->
+                <div class="flex items-center gap-4">
+                    <button class="relative" onclick="window.location.href='cart.html'">
+                        <i class="fas fa-shopping-cart text-gray-700 text-xl"></i>
+                        <span class="cart-badge">3</span>
+                    </button>
+                    <button onclick="window.location.href='profile.html'">
+                        <i class="fas fa-user text-gray-700 text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu hidden lg:hidden mt-4 pb-4">
+                <div class="flex flex-col gap-3">
+                    <a href="personalize.html" class="text-gray-600 hover:text-gray-900 py-2">Personalize</a>
+                    <a href="#products" class="text-gray-600 hover:text-gray-900 py-2">Products</a>
+                    <a href="profile.html" class="text-gray-600 hover:text-gray-900 py-2">Account</a>
+                    <button class="btn btn-outline mt-2" data-modal="login-modal">Log In</button>
+                    <button class="btn btn-primary mt-2" data-modal="signup-modal">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Promo Banner -->
+    <section class="container mb-8">
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+            <div class="p-8 md:p-12">
+                <div class="grid lg:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-4">
+                        <span class="badge badge-orange">
+                            <i class="fas fa-star mr-1"></i> Black Friday
+                        </span>
+                        <h1 class="text-4xl md:text-5xl font-bold text-white">
+                            Up to <span class="text-orange-400">50% OFF</span>
+                        </h1>
+                        <p class="text-gray-300 text-lg">
+                            Premium protection meets stunning design. Limited time offers on our best-selling cases.
+                        </p>
+                    </div>
+                    <div class="text-center lg:text-right">
+                        <button class="btn btn-primary px-8 py-4 text-lg" onclick="scrollToProducts()">
+                            Shop Deals <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Products Grid -->
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="products">
+            <!-- Personalize Card -->
+            <div class="card product-card" onclick="window.location.href='personalize.html'">
+                <div class="relative h-64 bg-gradient-to-br from-orange-400 to-orange-600">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-6">
+                        <div class="mb-4 p-4 bg-white/20 rounded-2xl backdrop-blur-sm">
+                            <i class="fas fa-wand-sparkles text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Personalize</h3>
+                        <p class="text-white/80 text-sm mb-4">Create your unique case with custom designs</p>
+                        <div class="flex items-center gap-2">
+                            <span>Start Creating</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Cards -->
+            <div class="card product-card" data-product-id="1">
+                <div class="relative">
+                    <div class="relative h-64 overflow-hidden bg-gray-100">
+                        <span class="absolute top-3 left-3 badge badge-orange">-37%</span>
+                        <button class="absolute top-3 right-3 wishlist-btn w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm shadow-sm">
+                            <i class="far fa-heart text-gray-500"></i>
+                        </button>
+                        <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=500&q=80" 
+                             alt="Midnight Marble" 
+                             class="w-full h-full object-cover product-image">
+                        <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/50 to-transparent">
+                            <button class="add-to-cart btn btn-primary w-full">
+                                <i class="fas fa-shopping-cart mr-2"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center gap-1 mb-2">
+                            <i class="fas fa-star text-amber-400"></i>
+                            <i class="fas fa-star text-amber-400"></i>
+                            <i class="fas fa-star text-amber-400"></i>
+                            <i class="fas fa-star text-amber-400"></i>
+                            <i class="fas fa-star text-amber-400"></i>
+                            <span class="text-xs text-gray-400 ml-1">(128)</span>
+                        </div>
+                        <h3 class="font-bold text-gray-900 mb-1">Midnight Marble</h3>
+                        <p class="text-sm text-gray-500 mb-3">iPhone 14, 15, 16</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-lg font-bold text-gray-900">$24.99</span>
+                                <span class="text-sm text-gray-400 line-through ml-2">$39.99</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- More product cards... -->
+        </div>
+
+        <!-- Load More -->
+        <div class="text-center mt-12">
+            <button class="btn btn-outline px-8 py-3" onclick="Toast.show('Loading more products...')">
+                Load More Products
+            </button>
+        </div>
     </main>
 
-    <footer>
-        <p>Group 13 — Customizable Phone Case Store © 2025</p>
+    <!-- Footer -->
+    <footer class="mt-12 border-t border-gray-200 py-8">
+        <div class="container text-center">
+            <p class="text-gray-500 text-sm">
+                © 2025 CaseCraft. Team 13 Project-Chenwei Fan, Andrew Lin, HsuanLu Yang.
+            </p>
+        </div>
     </footer>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay hidden" id="login-modal">
+        <div class="modal p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Welcome Back</h2>
+                <button class="p-2" data-close-modal>
+                    <i class="fas fa-times text-gray-500"></i>
+                </button>
+            </div>
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Email Address</label>
+                    <input type="email" class="input" placeholder="your@email.com" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Password</label>
+                    <input type="password" class="input" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-full">Log In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal-overlay hidden" id="signup-modal">
+        <div class="modal p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Create Account</h2>
+                <button class="p-2" data-close-modal>
+                    <i class="fas fa-times text-gray-500"></i>
+                </button>
+            </div>
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Full Name</label>
+                    <input type="text" class="input" placeholder="John Doe" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Email Address</label>
+                    <input type="email" class="input" placeholder="your@email.com" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Password</label>
+                    <input type="password" class="input" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-full">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function scrollToProducts() {
+            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
 </body>
 </html>
