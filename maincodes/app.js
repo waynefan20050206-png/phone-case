@@ -6,15 +6,15 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// setting
+// 設定 public 靜態資料夾
 app.use(express.static(path.join(__dirname)));
 
-// main page
+// 首頁
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-//other
+// 其他頁面路由
 app.get('/cart', (req, res) => {
   res.sendFile(path.join(__dirname, 'cart.html'));
 });
@@ -31,7 +31,7 @@ app.get('/profile', (req, res) => {
   res.sendFile(path.join(__dirname, 'profile.html'));
 });
 
-// start
+// 啟動伺服器
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
